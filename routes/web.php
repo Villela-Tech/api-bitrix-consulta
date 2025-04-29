@@ -13,7 +13,7 @@
 
 // URL utilizada para monitoramento do app
 $router->get('/', function () {
-    response();
+    return response()->json(['status' => 'ok', 'message' => 'API Bitrix Consulta running']);
 });
 
 /*

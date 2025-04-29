@@ -6,6 +6,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
     dirname(__DIR__)
 ))->bootstrap();
 
+date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
+
 /*
 |--------------------------------------------------------------------------
 | Create The Application
@@ -65,6 +67,7 @@ $app->singleton(
 $app->middleware([
     App\Http\Middleware\SetLocalization::class,
     App\Http\Middleware\Billing::class,
+    App\Http\Middleware\CorsMiddleware::class,
 ]);
 
 $app->routeMiddleware([
@@ -122,5 +125,8 @@ $app->alias('Curl', Ixudra\Curl\Facades\Curl::class);
 collect(scandir(__DIR__ . '/../config'))->each(function ($item) use ($app) {
     $app->configure(basename($item, '.php'));
 });
+
+$app->configure('app');
+$app->configure('auth');
 
 return $app;
