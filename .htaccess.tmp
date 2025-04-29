@@ -1,0 +1,5 @@
+php_value opcache.enable 0
+php_flag opcache.enable Off
+php_value opcache.revalidate_freq 0
+php_value max_execution_time 300
+php_value memory_limit 256M 

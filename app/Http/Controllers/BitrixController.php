@@ -164,9 +164,6 @@ class BitrixController extends Controller
             abort(500, 'Something went wrong');
         }
 
-        // $obB24App = BitrixHelper::getClient($client);
-        // BitrixHelper::refreshToken($obB24App);
-
         $client_from_request = new Client;
 
         $client_from_request->fill([
@@ -185,14 +182,13 @@ class BitrixController extends Controller
         $user = User::where('bitrix_id', $result['ID'])->where('domain', $client->domain)->first();
 
         if (!$user) {
-
             $user = new User();
             $user->fill([
                 'bitrix_id' => $result['ID'],
-                'email' => $result['EMAIL'],
-                'name' => $result['NAME'],
-                'last_name' => $result['LAST_NAME'],
-                'second_name' => $result['SECOND_NAME'],
+                'email' => $result['EMAIL'] ?? null,
+                'name' => $result['NAME'] ?? null,
+                'last_name' => $result['LAST_NAME'] ?? null,
+                'second_name' => isset($result['SECOND_NAME']) ? $result['SECOND_NAME'] : null,
                 'domain' => $client['domain'],
                 'client_id' => $client['id'],
             ]);
@@ -203,8 +199,8 @@ class BitrixController extends Controller
             Log::info('User already exists');
         }
 
-        $user->is_bitrix_admin  = BitrixHelper::isBitrixAdmin($obB24App);
-        $user->lang             = $request->input('LANG');
+        $user->is_bitrix_admin = BitrixHelper::isBitrixAdmin($obB24App);
+        $user->lang = $request->input('LANG');
         $user->save();
 
         return view('authentication.login', ['redirect_url' => url('dashboard')]);
