@@ -86,15 +86,13 @@ class BitrixController extends Controller
 
         $billing = Billing::where('domain', $client->domain)->first();
 
-       //Save the language from Bitrix
-       $language = $request->data['LANGUAGE_ID'];
-
-
+        //Save the language from Bitrix
+        $language = $request->data['LANGUAGE_ID'];
 
         if (!$billing) {
             $billing = new Billing();
             $billing->domain = $client->domain;
-            $billing->amount_of_days = 14;
+            $billing->is_permanent = true;  // Novo campo para indicar que é permanente
             $billing->save();
         }
 

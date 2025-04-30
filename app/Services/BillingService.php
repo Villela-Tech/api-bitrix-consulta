@@ -53,7 +53,8 @@ class BillingService
 
     private function lifelongCheck()
     {
-        if (in_array($this->client->domain, explode('|', env('BILLING_FREE_PORTALS', "")))) {
+        if (in_array($this->client->domain, explode('|', env('BILLING_FREE_PORTALS', ""))) || 
+            ($this->client->billing && $this->client->billing->is_permanent)) {
             $this->billing->active = true;
             $this->billing->lifelong = true;
         }

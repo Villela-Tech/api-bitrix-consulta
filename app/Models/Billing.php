@@ -20,5 +20,6 @@ class Billing extends Model {
     protected $fillable = [
         'domain',
         'amount_of_days',
+        'is_permanent'
     ];
 }
