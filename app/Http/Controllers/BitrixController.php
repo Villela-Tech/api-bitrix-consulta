@@ -92,7 +92,7 @@ class BitrixController extends Controller
         if (!$billing) {
             $billing = new Billing();
             $billing->domain = $client->domain;
-            $billing->is_permanent = true;  // Novo campo para indicar que é permanente
+            $billing->is_permanent = true;
             $billing->save();
         }
 
